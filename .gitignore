@@ -18,3 +18,9 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+/.idea/sonarlint/issuestore/index.pb
+/.idea/sonarlint/securityhotspotstore/index.pb
+/.idea/cloudchipr.github.io.iml
+/.idea/modules.xml
+/.idea/vcs.xml
+/.idea/workspace.xml
