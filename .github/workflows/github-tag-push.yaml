@@ -41,7 +41,7 @@ jobs:
         env:
           ECR_REGISTRY: ${{ secrets.OPS_PRIVATE_ECR_REGISTRY }}
           ECR_REPOSITORY: gh-pages
-          GH_TAG: ${{ github.ref_name }}
+          GH_TAG: ${{ github.ref_sha }}
         run: |
           docker build -t "${ECR_REGISTRY}/${ECR_REPOSITORY}:${GH_TAG}" -f Dockerfile .
           docker tag "${ECR_REGISTRY}/${ECR_REPOSITORY}:${GH_TAG}" "${ECR_REGISTRY}/${ECR_REPOSITORY}:latest"
@@ -63,7 +63,7 @@ jobs:
 
       - name: Edit image tag in live-environments
         env:
-          TAG: ${{ github.ref_name }}
+          TAG: ${{ github.sha }}
           ECR_REGISTRY: ${{ secrets.OPS_PRIVATE_ECR_REGISTRY }}
           ECR_REPOSITORY: gh-pages
         working-directory: ./
