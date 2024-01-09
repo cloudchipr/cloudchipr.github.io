@@ -59,7 +59,6 @@ jobs:
         with:
           repository: ${{ secrets.SAAS_LIVE_ENVIRONMENTS_REPOSITORY }}
           ref: main
-          path: live-environments
           token: ${{ secrets.GH_BOT_PAT }}
 
       - name: Edit image tag in live-environments
