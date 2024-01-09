@@ -6,8 +6,8 @@ permissions:
 
 on:
   push:
-    tags:
-      - 'v*'
+    branches:
+      - main
 
 concurrency:
   cancel-in-progress: true
@@ -69,9 +69,9 @@ jobs:
           ECR_REPOSITORY: gh-pages
 
         run: |
-          git config --global user.name ${{ secrets.GH_BOT_USERNAME }}
-          git config --global user.email ${{ secrets.GH_BOT_EMAIL }}
+          git config --global user.name ${{ vars.GH_BOT_USERNAME }}
+          git config --global user.email ${{ vars.GH_BOT_EMAIL }}
           cd aws/sources/staging/gh-pages
-          sed -i "s|$ECR_REGISTRY/$ECR_REPOSITORY:[^ ]*|$ECR_REGISTRY/$ECR_REPOSITORY:$TAG|" values.yaml
+          yq -i "select(document_index == 0).spec.template.spec.containers[0].image = \"${ECR_REGISTRY}/${ECR_REPOSITORY}:${TAG}\"" values.yaml
           git commit -am "release gh-pages version $TAG"
           git push
