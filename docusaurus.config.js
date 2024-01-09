@@ -8,7 +8,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 const config = {
   title: 'CloudChipr',
   tagline: 'Cut your cloud bills in a few clicks',
-  favicon: 'img/favicon.ico',
+  favicon: 'img/cc_icon_big.ico',
 
   // Set the production url of your site here
   url: 'https://cloudchipr.github.io',
@@ -67,17 +67,17 @@ const config = {
       // Replace with your project's social card
       image: 'img/docusaurus-social-card.jpg',
       navbar: {
-        title: 'My Site',
+        title: '',
         logo: {
-          alt: 'My Site Logo',
-          src: 'img/logo.svg',
+          alt: 'cc_logo',
+          src: 'img/cc_logo.png',
         },
         items: [
           {
             type: 'doc',
             docId: 'intro',
             position: 'left',
-            label: 'Tutorial',
+            label: 'Docs',
           },
           {to: '/blog', label: 'Blog', position: 'left'},
           {
@@ -130,7 +130,7 @@ const config = {
             ],
           },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
+        copyright: `Copyright © ${new Date().getFullYear()} Cloudchipr`,
       },
       prism: {
         theme: lightCodeTheme,
