@@ -51,7 +51,7 @@ jobs:
 
   edit-image-tag:
     needs: build-push-registry
-    name: Checkout to target repository
+    name: Deliver to K8S
     runs-on: ubuntu-latest
     steps:
       - name: Clone live environments repo
