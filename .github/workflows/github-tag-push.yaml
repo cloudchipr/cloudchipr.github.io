@@ -43,7 +43,7 @@ jobs:
           ECR_REPOSITORY: gh-pages
           GH_TAG: ${{ github.ref_name }}
         run: |
-          docker build -t "${ECR_REGISTRY}/${ECR_REPOSITORY}:${GH_TAG}" --build-arg VERSION="${GH_TAG}" -f bin/docker/Dockerfile bin/
+          docker build -t "${ECR_REGISTRY}/${ECR_REPOSITORY}:${GH_TAG}" -f Dockerfile .
           docker tag "${ECR_REGISTRY}/${ECR_REPOSITORY}:${GH_TAG}" "${ECR_REGISTRY}/${ECR_REPOSITORY}:latest"
           docker push "${ECR_REGISTRY}/${ECR_REPOSITORY}:${GH_TAG}"
           docker push "${ECR_REGISTRY}/${ECR_REPOSITORY}:latest"
