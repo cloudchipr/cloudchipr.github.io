@@ -73,5 +73,5 @@ jobs:
           git config --global user.email ${{ vars.GH_BOT_EMAIL }}
           cd aws/sources/staging/gh-pages
           yq -i "select(document_index == 0).spec.template.spec.containers[0].image = \"${ECR_REGISTRY}/${ECR_REPOSITORY}:${TAG}\"" values.yaml
-          git commit -am "release gh-pages version $TAG"
+          git commit -am "change gh-pages image tag to $TAG"
           git push
