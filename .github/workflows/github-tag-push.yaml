@@ -67,6 +67,7 @@ jobs:
           TAG: ${{ github.ref_name }}
           ECR_REGISTRY: ${{ secrets.OPS_PRIVATE_ECR_REGISTRY }}
           ECR_REPOSITORY: gh-pages
+        working-directory: ./
 
         run: |
           git config --global user.name ${{ vars.GH_BOT_USERNAME }}
