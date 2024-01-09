@@ -28,8 +28,8 @@ jobs:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v2
         with:
-          role-to-assume: ${{ vars.OPS_GITHUB_ROLE }}
-          aws-region: ${{ vars.ORG_AWS_REGION }}
+          role-to-assume: ${{ secrets.OPS_GITHUB_ROLE }}
+          aws-region: ${{ secrets.ORG_AWS_REGION }}
 
       - name: Login to Amazon ECR
         id: login-ecr
@@ -39,7 +39,7 @@ jobs:
 
       - name: Build Container Image and push to ECR
         env:
-          ECR_REGISTRY: ${{ vars.OPS_PRIVATE_ECR_REGISTRY }}
+          ECR_REGISTRY: ${{ secrets.OPS_PRIVATE_ECR_REGISTRY }}
           ECR_REPOSITORY: gh-pages
           GH_TAG: ${{ github.ref_name }}
         run: |
@@ -57,7 +57,7 @@ jobs:
       - name: Clone live environments repo
         uses: actions/checkout@v3
         with:
-          repository: ${{ vars.SAAS_LIVE_ENVIRONMENTS_REPOSITORY }}
+          repository: ${{ secrets.SAAS_LIVE_ENVIRONMENTS_REPOSITORY }}
           ref: main
           path: live-environments
           token: ${{ secrets.gh_token }}
@@ -65,12 +65,12 @@ jobs:
       - name: Edit image tag in live-environments
         env:
           TAG: ${{ github.ref_name }}
-          ECR_REGISTRY: ${{ vars.OPS_PRIVATE_ECR_REGISTRY }}
+          ECR_REGISTRY: ${{ secrets.OPS_PRIVATE_ECR_REGISTRY }}
           ECR_REPOSITORY: gh-pages
 
         run: |
-          git config --global user.name ${{ vars.GH_BOT_USERNAME }}
-          git config --global user.email ${{ vars.GH_BOT_EMAIL }}
+          git config --global user.name ${{ secrets.GH_BOT_USERNAME }}
+          git config --global user.email ${{ secrets.GH_BOT_EMAIL }}
           cd aws/sources/staging/gh-pages
           sed -i "s|$ECR_REGISTRY/$ECR_REPOSITORY:[^ ]*|$ECR_REGISTRY/$ECR_REPOSITORY:$TAG|" values.yaml
           git commit -am "release gh-pages version $TAG"
