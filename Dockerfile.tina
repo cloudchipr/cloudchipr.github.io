@@ -1,4 +1,4 @@
-FROM node:18 as build
+FROM node:19.9.0 as build
 
 WORKDIR /app
 
@@ -15,3 +15,5 @@ ENV  TINA_TOKEN="${TINA_TOKEN}"
 RUN yarn
 
 RUN yarn build
+
+EXPOSE 3000
