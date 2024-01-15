@@ -4,6 +4,8 @@ WORKDIR /app
 
 COPY . .
 
+COPY .env /app/.env
+
 RUN yarn
 
 RUN yarn build
