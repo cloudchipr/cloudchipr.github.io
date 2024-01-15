@@ -7,6 +7,10 @@ const branch =
   process.env.HEAD ||
   "main";
 
+// Log the environment variables to ensure they are being loaded
+console.log('Branch:', branch);
+console.log('TinaCMS Client ID:', process.env.NEXT_PUBLIC_TINA_CLIENT_ID);
+console.log('TinaCMS Token:', process.env.TINA_TOKEN);
 export default defineConfig({
   branch,
 
