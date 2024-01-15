@@ -42,19 +42,11 @@ jobs:
           ECR_REGISTRY: ${{ secrets.OPS_PRIVATE_ECR_REGISTRY }}
           ECR_REPOSITORY: gh-pages
           GH_TAG: ${{ github.sha }}
-          NEXT_PUBLIC_TINA_CLIENT_ID: ${{ secrets.NEXT_PUBLIC_TINA_CLIENT_ID }}
-          TINA_TOKEN: ${{ secrets.TINA_TOKEN }}
         run: |
-          docker build --build-arg NEXT_PUBLIC_TINA_CLIENT_ID="${NEXT_PUBLIC_TINA_CLIENT_ID}" --build-arg TINA_TOKEN="${TINA_TOKEN}"  -t "${ECR_REGISTRY}/${ECR_REPOSITORY}:${GH_TAG}" -f Dockerfile .
+          docker build -t "${ECR_REGISTRY}/${ECR_REPOSITORY}:${GH_TAG}" -f Dockerfile .
           docker tag "${ECR_REGISTRY}/${ECR_REPOSITORY}:${GH_TAG}" "${ECR_REGISTRY}/${ECR_REPOSITORY}:latest"
           docker push "${ECR_REGISTRY}/${ECR_REPOSITORY}:${GH_TAG}"
           docker push "${ECR_REGISTRY}/${ECR_REPOSITORY}:latest"
-
-          docker build --build-arg NEXT_PUBLIC_TINA_CLIENT_ID="${NEXT_PUBLIC_TINA_CLIENT_ID}" --build-arg TINA_TOKEN="${TINA_TOKEN}"  -t "${ECR_REGISTRY}/${ECR_REPOSITORY}:tina-${GH_TAG}" -f Dockerfile.tina .
-          docker tag "${ECR_REGISTRY}/${ECR_REPOSITORY}:tina-${GH_TAG}" "${ECR_REGISTRY}/${ECR_REPOSITORY}:tina-latest"
-          docker push "${ECR_REGISTRY}/${ECR_REPOSITORY}:tina-${GH_TAG}"
-          docker push "${ECR_REGISTRY}/${ECR_REPOSITORY}:tina-latest"
-
 
   edit-image-tag:
     needs: build-push-registry
@@ -79,6 +71,6 @@ jobs:
           git config --global user.name ${{ vars.GH_BOT_USERNAME }}
           git config --global user.email ${{ vars.GH_BOT_EMAIL }}
           cd aws/sources/staging/gh-pages
-          yq -i "select(document_index == 0).spec.template.spec.containers[0].image = \"${ECR_REGISTRY}/${ECR_REPOSITORY}:tina-${TAG}\"" values.yaml
+          yq -i "select(document_index == 0).spec.template.spec.containers[0].image = \"${ECR_REGISTRY}/${ECR_REPOSITORY}:${TAG}\"" values.yaml
           git commit -am "change gh-pages image tag to $TAG"
           git push
