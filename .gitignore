@@ -29,3 +29,8 @@ yarn-error.log*
 
 node_modules
 .env
+
+
+#TinaCreds
+NEXT_PUBLIC_TINA_CLIENT_ID=dd8036a9-8a1d-4e7a-9645-c3afb94f928f
+TINA_TOKEN=f6b2632588eac319cca2530fb334e9652eb86356
