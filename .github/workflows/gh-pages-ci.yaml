@@ -42,9 +42,11 @@ jobs:
           ECR_REGISTRY: ${{ secrets.OPS_PRIVATE_ECR_REGISTRY }}
           ECR_REPOSITORY: gh-pages
           GH_TAG: ${{ github.sha }}
-          # NEXT_PUBLIC_TINA_CLIENT_ID: ${{ secrets.NEXT_PUBLIC_TINA_CLIENT_ID }}
-          # TINA_TOKEN: ${{ secrets.TINA_TOKEN }}
+          NEXT_PUBLIC_TINA_CLIENT_ID: ${{ secrets.NEXT_PUBLIC_TINA_CLIENT_ID }}
+          TINA_TOKEN: ${{ secrets.TINA_TOKEN }}
         run: |
+          echo  "${NEXT_PUBLIC_TINA_CLIENT_ID}" > .env
+          echo "${TINA_TOKEN}" >> .env
           docker build -t "${ECR_REGISTRY}/${ECR_REPOSITORY}:${GH_TAG}" -f Dockerfile .
           docker tag "${ECR_REGISTRY}/${ECR_REPOSITORY}:${GH_TAG}" "${ECR_REGISTRY}/${ECR_REPOSITORY}:latest"
           docker push "${ECR_REGISTRY}/${ECR_REPOSITORY}:${GH_TAG}"
