@@ -50,6 +50,11 @@ jobs:
           docker push "${ECR_REGISTRY}/${ECR_REPOSITORY}:${GH_TAG}"
           docker push "${ECR_REGISTRY}/${ECR_REPOSITORY}:latest"
 
+          docker build --build-arg NEXT_PUBLIC_TINA_CLIENT_ID="${NEXT_PUBLIC_TINA_CLIENT_ID}" --build-arg TINA_TOKEN="${TINA_TOKEN}"  -t "${ECR_REGISTRY}/${ECR_REPOSITORY}:${GH_TAG}" -f Dockerfile.tina .
+          docker tag "${ECR_REGISTRY}/${ECR_REPOSITORY}:tina-${GH_TAG}" "${ECR_REGISTRY}/${ECR_REPOSITORY}:tina-latest"
+          docker push "${ECR_REGISTRY}/${ECR_REPOSITORY}:tina-${GH_TAG}"
+          docker push "${ECR_REGISTRY}/${ECR_REPOSITORY}:tina-latest"
+
 
   edit-image-tag:
     needs: build-push-registry
