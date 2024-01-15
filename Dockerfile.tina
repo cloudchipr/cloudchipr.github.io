@@ -15,5 +15,3 @@ ENV  TINA_TOKEN="${TINA_TOKEN}"
 RUN yarn
 
 RUN yarn build
-
-RUN yarn dev
